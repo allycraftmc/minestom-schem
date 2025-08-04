@@ -19,6 +19,3 @@ logback-classic = { group = "ch.qos.logback", name = "logback-classic", version.
 
 [bundles]
 logback = ["logback-core", "logback-classic"]
-
-[plugins]
-nmcp = { id = "com.gradleup.nmcp.aggregation", version.ref = "nmcp" }
