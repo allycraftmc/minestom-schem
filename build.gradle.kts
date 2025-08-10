@@ -10,7 +10,6 @@ description = "Schematic reader and writer for Minestom"
 
 repositories {
     mavenCentral()
-    maven(url = "https://jitpack.io")
 }
 
 dependencies {
@@ -36,25 +35,27 @@ tasks.test {
 publishing {
     repositories {
         maven {
-            name = "allycraft-repository"
-            url = uri("https://mvn.allycraft.de/releases")
+            url = uri("https://mvn.allycraft.de/snapshots")
             credentials {
                 username = System.getenv("MAVEN_USERNAME")
                 password = System.getenv("MAVEN_PASSWORD")
-            }
-            authentication {
-                create<BasicAuthentication>("basic")
             }
         }
     }
 
     publications {
-        create<MavenPublication>("maven") {
-            groupId = "dev.hollowcube"
-            artifactId = "schem"
-            version = project.version.toString()
+        if(project.version != "dev") {
+            create<MavenPublication>("maven") {
+                version = project.version.toString()
 
-            from(project.components["java"])
+                from(components["java"])
+            }
+        }
+
+        create<MavenPublication>("mavenSnapshot") {
+            version = "1.0-SNAPSHOT"
+
+            from(components["java"])
         }
     }
 }
